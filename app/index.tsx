@@ -60,17 +60,20 @@ export default function Index() {
 					))}
 				</ScrollView>
 			</View>
-			<ProductShimmerGrid />
-			{/* <FlashList
-				data={filteredProducts}
-				renderItem={renderProduct}
-				estimatedItemSize={200}
-				numColumns={2}
-				contentContainerStyle={{ padding: 8 }}
-				keyExtractor={(item) => item.id.toString()}
-				onRefresh={refetch}
-				refreshing={isRefetching}
-			/> */}
+			{isLoading ? (
+				<ProductShimmerGrid />
+			) : (
+				<FlashList
+					data={filteredProducts}
+					renderItem={renderProduct}
+					estimatedItemSize={200}
+					numColumns={2}
+					contentContainerStyle={{ padding: 8 }}
+					keyExtractor={(item) => item.id.toString()}
+					onRefresh={refetch}
+					refreshing={isRefetching}
+				/>
+			)}
 		</View>
 	)
 }
