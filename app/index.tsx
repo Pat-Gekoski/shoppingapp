@@ -1,9 +1,17 @@
 import { useQuery } from '@tanstack/react-query'
-import { Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { getCategories, getProducts } from './utils/api'
+import { FlashList } from '@shopify/flash-list'
+import { useCallback } from 'react'
+import ProductCard from './components/ProductCard'
 
 export default function Index() {
-	const { data: products } = useQuery({
+	const {
+		data: products,
+		isLoading,
+		refetch,
+		isRefetching,
+	} = useQuery({
 		queryKey: ['products'],
 		queryFn: getProducts,
 	})
@@ -19,15 +27,29 @@ export default function Index() {
 
 	const allCategories = ['all', ...categories]
 
+	const renderProduct = useCallback(({ item }: any) => {
+		return <ProductCard product={item} />
+	}, [])
+
 	return (
-		<View
-			style={{
-				flex: 1,
-				justifyContent: 'center',
-				alignItems: 'center',
-			}}
-		>
-			<Text>Edit app/index.tsx to edit this screenasfasdf.</Text>
+		<View style={styles.container}>
+			<FlashList
+				data={products}
+				renderItem={renderProduct}
+				estimatedItemSize={200}
+				numColumns={2}
+				contentContainerStyle={{ padding: 8 }}
+				keyExtractor={(item) => item.id.toString()}
+				onRefresh={refetch}
+				refreshing={isRefetching}
+			/>
 		</View>
 	)
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+	},
+})
