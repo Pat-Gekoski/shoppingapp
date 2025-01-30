@@ -27,9 +27,22 @@ const Page = () => {
 		addProduct(product)
 	}
 
+	const onShare = () => {
+		console.log('Share')
+	}
+
 	return (
 		<View style={styles.container}>
-			<Stack.Screen options={{ title: product.title }} />
+			<Stack.Screen
+				options={{
+					title: product.title,
+					headerRight: () => (
+						<TouchableOpacity onPress={onShare}>
+							<Ionicons name='share-outline' size={24} color={COLORS.primary} />
+						</TouchableOpacity>
+					),
+				}}
+			/>
 			<ScrollView>
 				<Image source={{ uri: product.image }} style={styles.image} contentFit='contain' />
 				<View style={styles.content}>
