@@ -1,4 +1,4 @@
-import { Alert, FlatList, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Button, FlatList, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useCartStore } from '@/store/cartStore'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import { COLORS } from '@/utils/colors'
 import CartItem from '@/components/CartItem'
+import * as Sentry from '@sentry/react-native'
 
 const Page = () => {
 	const { products, total, clearCart } = useCartStore()
@@ -32,6 +33,14 @@ const Page = () => {
 				keyExtractor={(item) => item.id.toString()}
 				renderItem={({ item }) => <CartItem product={item} />}
 				ListHeaderComponent={() => <>{products.length > 0 && <Text style={styles.totalText}>Total: ${total}</Text>}</>}
+				ListFooterComponent={
+					<Button
+						title='Test Error!'
+						onPress={() => {
+							Sentry.captureException(new Error('Test Error!'))
+						}}
+					/>
+				}
 			/>
 			<TouchableOpacity
 				style={[styles.addToCartButton, { paddingBottom: Platform.OS === 'ios' ? bottom : 20 }]}
