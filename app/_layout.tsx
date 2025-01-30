@@ -6,6 +6,7 @@ import { useMMKVDevTools } from '@dev-plugins/react-native-mmkv/build/useMMKVDev
 import { storage } from '@/store/mmkv'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -23,40 +24,42 @@ export default function RootLayout() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Stack>
-				<Stack.Screen
-					name='index'
-					options={{
-						title: 'Galactic Products',
-						headerShadowVisible: false,
-						headerSearchBarOptions: {
-							placeholder: 'Search products...',
-							hideWhenScrolling: false,
-							hideNavigationBar: false,
-						},
-						headerRight: () => <CartButton />,
-					}}
-				/>
-				<Stack.Screen
-					name='product/[id]'
-					options={{
-						title: '',
-						headerBackTitle: 'Products',
-					}}
-				/>
-				<Stack.Screen
-					name='cart'
-					options={{
-						title: 'Cart',
-						presentation: 'modal',
-						headerLeft: () => (
-							<TouchableOpacity onPress={() => router.dismiss()}>
-								<Ionicons name='close' size={24} color='black' />
-							</TouchableOpacity>
-						),
-					}}
-				/>
-			</Stack>
+			<GestureHandlerRootView>
+				<Stack>
+					<Stack.Screen
+						name='index'
+						options={{
+							title: 'Galactic Products',
+							headerShadowVisible: false,
+							headerSearchBarOptions: {
+								placeholder: 'Search products...',
+								hideWhenScrolling: false,
+								hideNavigationBar: false,
+							},
+							headerRight: () => <CartButton />,
+						}}
+					/>
+					<Stack.Screen
+						name='product/[id]'
+						options={{
+							title: '',
+							headerBackTitle: 'Products',
+						}}
+					/>
+					<Stack.Screen
+						name='cart'
+						options={{
+							title: 'Cart',
+							presentation: 'modal',
+							headerLeft: () => (
+								<TouchableOpacity onPress={() => router.dismiss()}>
+									<Ionicons name='close' size={24} color='black' />
+								</TouchableOpacity>
+							),
+						}}
+					/>
+				</Stack>
+			</GestureHandlerRootView>
 		</QueryClientProvider>
 	)
 }
