@@ -1,17 +1,19 @@
 import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Stack, useLocalSearchParams } from 'expo-router'
-import { getProduct } from '../utils/api'
+import { getProduct } from '../../utils/api'
 import { useQuery } from '@tanstack/react-query'
-import { ProductDetailsShimmer } from '../components/ProductDetailsShimmer'
+import ProductDetailsShimmer from '../../components/ProductDetailsShimmer'
 import { Image } from 'expo-image'
-import { COLORS } from '../utils/colors'
+import { COLORS } from '../../utils/colors'
 import { Ionicons } from '@expo/vector-icons'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useCartStore } from '@/store/cartStore'
 
 const Page = () => {
 	const { id } = useLocalSearchParams()
 	const { bottom } = useSafeAreaInsets()
+	const { addProduct } = useCartStore()
 	const { data: product, isLoading } = useQuery({
 		queryKey: ['product', id],
 		queryFn: () => getProduct(+id),
@@ -22,7 +24,7 @@ const Page = () => {
 	if (!product) return <Text>Product not found</Text>
 
 	const handleAddToCart = () => {
-		// Add product to cart
+		addProduct(product)
 	}
 
 	return (

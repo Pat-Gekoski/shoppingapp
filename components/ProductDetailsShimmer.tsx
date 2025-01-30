@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
 
-export function ProductDetailsShimmer() {
+export default function ProductDetailsShimmer() {
 	return (
 		<View style={styles.container}>
 			<ShimmerPlaceholder style={styles.image} shimmerColors={['#ebebeb', '#ddd', '#ebebeb']} />

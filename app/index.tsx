@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { getCategories, getProducts } from './utils/api'
+import { getCategories, getProducts } from '../utils/api'
 import { FlashList } from '@shopify/flash-list'
 import { useCallback, useMemo, useState } from 'react'
-import ProductCard from './components/ProductCard'
-import { COLORS } from './utils/colors'
+import ProductCard from '../components/ProductCard'
+import { COLORS } from '../utils/colors'
 import { Stack } from 'expo-router'
 import { useHeaderHeight } from '@react-navigation/elements'
-import { ProductShimmerGrid } from './components/ProductListShimmer'
+import ProductShimmerGrid from '../components/ProductListShimmer'
 
 export default function Index() {
 	const [selectedCategory, setSelectedCategory] = useState<string>('all')

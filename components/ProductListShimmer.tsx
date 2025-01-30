@@ -27,7 +27,7 @@ const ProductShimmer = () => {
 	)
 }
 
-export const ProductShimmerGrid = () => {
+const ProductShimmerGrid = () => {
 	return (
 		<View style={styles.container}>
 			{[...Array(6)].map((_, index) => (
@@ -36,6 +36,8 @@ export const ProductShimmerGrid = () => {
 		</View>
 	)
 }
+
+export default ProductShimmerGrid
 
 const styles = StyleSheet.create({
 	container: {
