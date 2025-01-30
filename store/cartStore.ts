@@ -31,13 +31,13 @@ export const useCartStore = create<CartState>()(
 					if (hasProduct) {
 						return {
 							products: state.products.map((p) => (p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p)),
-							total: newTotal,
+							total: +newTotal.toFixed(2),
 							count: newCount,
 						}
 					} else {
 						return {
 							products: [...state.products, { ...product, quantity: 1 }],
-							total: newTotal,
+							total: +newTotal.toFixed(2),
 							count: newCount,
 						}
 					}
