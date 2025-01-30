@@ -1,6 +1,11 @@
 import { useReactQueryDevTools } from '@dev-plugins/react-query/build/useReactQueryDevTools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
+import CartButton from '../components/CartButton'
+import { useMMKVDevTools } from '@dev-plugins/react-native-mmkv/build/useMMKVDevTools'
+import { storage } from '@/store/mmkv'
+import { TouchableOpacity } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -13,6 +18,8 @@ const queryClient = new QueryClient({
 
 export default function RootLayout() {
 	useReactQueryDevTools(queryClient)
+	useMMKVDevTools({ storage })
+	const router = useRouter()
 
 	return (
 		<QueryClientProvider client={queryClient}>
@@ -27,6 +34,7 @@ export default function RootLayout() {
 							hideWhenScrolling: false,
 							hideNavigationBar: false,
 						},
+						headerRight: () => <CartButton />,
 					}}
 				/>
 				<Stack.Screen
@@ -34,6 +42,18 @@ export default function RootLayout() {
 					options={{
 						title: '',
 						headerBackTitle: 'Products',
+					}}
+				/>
+				<Stack.Screen
+					name='cart'
+					options={{
+						title: 'Cart',
+						presentation: 'modal',
+						headerLeft: () => (
+							<TouchableOpacity onPress={() => router.dismiss()}>
+								<Ionicons name='close' size={24} color='black' />
+							</TouchableOpacity>
+						),
 					}}
 				/>
 			</Stack>
