@@ -1,4 +1,4 @@
-import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import { getProduct } from '../../utils/api'
@@ -27,9 +27,31 @@ const Page = () => {
 		addProduct(product)
 	}
 
+	const onShare = async () => {
+		const url = `gekoskishop://product/${product.id}`
+		if (Platform.OS === 'ios') {
+			await Share.share({
+				url,
+			})
+		} else {
+			await Share.share({
+				url,
+			})
+		}
+	}
+
 	return (
 		<View style={styles.container}>
-			<Stack.Screen options={{ title: product.title }} />
+			<Stack.Screen
+				options={{
+					title: product.title,
+					headerRight: () => (
+						<TouchableOpacity onPress={onShare}>
+							<Ionicons name='share-outline' size={24} color={COLORS.primary} />
+						</TouchableOpacity>
+					),
+				}}
+			/>
 			<ScrollView>
 				<Image source={{ uri: product.image }} style={styles.image} contentFit='contain' />
 				<View style={styles.content}>
