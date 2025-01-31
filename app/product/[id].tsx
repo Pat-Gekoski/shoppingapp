@@ -34,9 +34,10 @@ const Page = () => {
 				url,
 			})
 		} else {
-			await Share.share({
-				url,
-			})
+			// For Android you may need to use the bundle identifier
+			// await Share.share({
+			// 	// url,
+			// })
 		}
 	}
 
